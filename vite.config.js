@@ -8,4 +8,8 @@ export default defineConfig({
     tailwindcss(),
   ],
   base: "/kd-associate/",
+  server: {
+    port: 3000,
+    strictPort: true,
+  },
 });
