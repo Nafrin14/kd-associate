@@ -1,12 +1,83 @@
 @import "tailwindcss";
 
+/* ===========================
+   GLOBAL TYPOGRAPHY
+   =========================== */
 html {
   scroll-behavior: smooth;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
 }
 
 body {
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
   background: #ffffff;
   color: #111111;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+/* ===========================
+   SCROLL REVEAL ANIMATIONS
+   =========================== */
+.reveal-hidden {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-hidden.delay-100 { transition-delay: 0.1s; }
+.reveal-hidden.delay-200 { transition-delay: 0.2s; }
+.reveal-hidden.delay-300 { transition-delay: 0.3s; }
+.reveal-hidden.delay-400 { transition-delay: 0.4s; }
+.reveal-hidden.delay-500 { transition-delay: 0.5s; }
+
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Fade-in only (no Y movement) */
+.fade-hidden {
+  opacity: 0;
+  transition: opacity 0.7s ease;
+}
+.fade-visible {
+  opacity: 1;
+}
+
+/* ===========================
+   PAGE TRANSITIONS
+   =========================== */
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.page-transition {
+  animation: pageFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ===========================
+   CONTACT FORM SUCCESS
+   =========================== */
+@keyframes successPop {
+  0%   { transform: scale(0.7); opacity: 0; }
+  70%  { transform: scale(1.05); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.success-pop {
+  animation: successPop 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes checkDraw {
+  from { stroke-dashoffset: 60; }
+  to   { stroke-dashoffset: 0; }
+}
+
+.check-draw {
+  stroke-dasharray: 60;
+  stroke-dashoffset: 60;
+  animation: checkDraw 0.5s 0.3s ease forwards;
+}

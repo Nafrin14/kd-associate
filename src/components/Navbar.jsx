@@ -1,12 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FiMenu, FiX, FiArrowUpRight } from "react-icons/fi";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { pathname } = useLocation();
 
   const closeMenu = () => setMenuOpen(false);
+
+  // Detect scroll position to add elevated styling
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    closeMenu();
+  }, [pathname]);
 
   const navLinks = [
     { to: "/", label: "Home" },
@@ -16,7 +29,13 @@ const Navbar = () => {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-lg border-b border-gray-100/80">
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-white/95 backdrop-blur-xl shadow-md shadow-slate-900/8 border-b border-gray-100"
+          : "bg-white/90 backdrop-blur-lg border-b border-gray-100/80"
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
         <div className="h-18 py-3 flex items-center justify-between gap-6">
 
@@ -42,7 +61,6 @@ const Navbar = () => {
 
           {/* Desktop Nav — pill container */}
           <nav className="hidden md:flex items-center bg-gray-100/80 rounded-full px-2 py-2 gap-1">
-
             {navLinks.map(({ to, label }) => (
               <Link
                 key={to}
@@ -56,12 +74,10 @@ const Navbar = () => {
                 {label}
               </Link>
             ))}
-
           </nav>
 
           {/* CTA + Mobile toggle */}
           <div className="flex items-center gap-3">
-
             <Link
               to="/contact"
               className="hidden md:inline-flex items-center gap-2 bg-blue-600 text-white px-5 py-2.5 rounded-full text-sm font-bold hover:bg-blue-800 transition-all"
@@ -81,17 +97,18 @@ const Navbar = () => {
                 <FiMenu className="text-lg" />
               )}
             </button>
-
           </div>
 
         </div>
 
-        {/* Mobile Menu */}
-        {menuOpen && (
-          <div className="md:hidden border-t border-gray-100 py-4 pb-5">
-
+        {/* Mobile Menu — animated slide down */}
+        <div
+          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+            menuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+          }`}
+        >
+          <div className="border-t border-gray-100 py-4 pb-5">
             <nav className="flex flex-col gap-1">
-
               {navLinks.map(({ to, label }) => (
                 <Link
                   key={to}
@@ -115,11 +132,9 @@ const Navbar = () => {
                 Contact Us
                 <FiArrowUpRight />
               </Link>
-
             </nav>
-
           </div>
-        )}
+        </div>
 
       </div>
     </header>
@@ -127,4 +142,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
