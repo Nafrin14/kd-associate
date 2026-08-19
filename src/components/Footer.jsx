@@ -77,19 +77,22 @@ const Footer = () => {
             <h3 className="font-semibold text-white mb-6 uppercase tracking-wider text-sm">
               Our Partners
             </h3>
-            <nav className="flex flex-col gap-4">
-              <span className="text-blue-200 text-sm flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-teal-500" />
-                KD Fence & Deck
-              </span>
-              <span className="text-blue-200 text-sm flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-teal-500" />
-                Tree Services
-              </span>
-              <span className="text-blue-200 text-sm flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-teal-500" />
-                KD Landscaping
-              </span>
+            <nav className="flex flex-col gap-3">
+              {[
+                "Branch Specialists",
+                "KD Fence & Deck",
+                "KD Tree Service",
+                "All Pro Shinning",
+                "10X Tree Services",
+                "Prime Landscapers",
+                "Soil and Seed",
+                "All Pro Mobile Mechanics",
+              ].map((name) => (
+                <span key={name} className="text-blue-200 text-sm flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-teal-500 shrink-0" />
+                  {name}
+                </span>
+              ))}
             </nav>
           </div>
 
